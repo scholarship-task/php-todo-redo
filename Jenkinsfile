@@ -13,7 +13,7 @@ pipeline {
 
     stage('Checkout SCM') {
       steps {
-            git branch: 'main', url: 'https://github.com/darey-devops/php-todo.git'
+            git changelog: false, credentialsId: 'GitHub token', poll: false, url: 'https://github.com/scholarship-task/php-todo-redo.git'
       }
     }
 
