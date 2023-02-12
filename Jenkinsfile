@@ -98,6 +98,11 @@ pipeline {
                 sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
                 sh "waitForQualityGate"
             }
+
+            def qualitygate = waitForQualityGate()
+            if (qualitygate.status != "OK") {
+              error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+            }
             // timeout(time: 2, unit: 'MINUTES') {
             //     waitForQualityGate abortPipeline: true
             // }
@@ -128,7 +133,8 @@ pipeline {
 
     stage ('Deploy to Dev Environment') {
     steps {
-    build job: 'ansible-config-mgt/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+      sh "echo Build job"
+    // build job: 'ansible-config-mgt/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
     }
   }
   
