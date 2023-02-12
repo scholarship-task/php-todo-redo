@@ -96,16 +96,16 @@ pipeline {
         steps {
             withSonarQubeEnv('sonarqube') {
                 sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
-                sh "waitForQualityGate"
+                // sh "waitForQualityGate"
             }
 
             // def qualitygate = waitForQualityGate()
             // if (qualitygate.status != "OK") {
             //   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
             // }
-            // timeout(time: 2, unit: 'MINUTES') {
-            //     waitForQualityGate abortPipeline: true
-            // }
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
         }
     }
     
