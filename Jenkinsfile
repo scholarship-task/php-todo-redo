@@ -109,12 +109,14 @@ pipeline {
         }
     }
 
-    stage('QualityGate') {
-      steps {
-        waitForQualityGate
-    // One or more steps need to be included within the steps block.
-    }
-}
+    stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }
     
     stage ('Upload Artifact to Artifactory') {
           steps {
