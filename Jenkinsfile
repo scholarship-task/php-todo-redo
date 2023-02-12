@@ -91,7 +91,7 @@ pipeline {
     stage ('Upload Artifact to Artifactory') {
           steps {
             script { 
-                 def server = Artifactory.server 'artifactory-server'                 
+                 def server = Artifactory.server 'artifactory'                 
                  def uploadSpec = """{
                     "files": [
                       {
