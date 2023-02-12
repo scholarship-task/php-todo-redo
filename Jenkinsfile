@@ -90,10 +90,10 @@ pipeline {
     stage('Upload Artifact to Artifactory') {
       steps {
         script {
-          def server = Artifactory.server 'artifactory-server'
-          def uploadSpec = ""
-          "{
-          "files": [{
+          def server = Artifactory.server 'artifactory'
+          def uploadSpec = """{
+            git add .
+            "files": [{
             "pattern": "php-todo.zip",
             "target": "<name-of-artifact-repository>/php-todo",
             "props": "type=zip;status=ready"
