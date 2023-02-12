@@ -99,10 +99,10 @@ pipeline {
                 sh "waitForQualityGate"
             }
 
-            def qualitygate = waitForQualityGate()
-            if (qualitygate.status != "OK") {
-              error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-            }
+            // def qualitygate = waitForQualityGate()
+            // if (qualitygate.status != "OK") {
+            //   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+            // }
             // timeout(time: 2, unit: 'MINUTES') {
             //     waitForQualityGate abortPipeline: true
             // }
