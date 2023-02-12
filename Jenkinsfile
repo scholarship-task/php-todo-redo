@@ -87,33 +87,37 @@ pipeline {
       }
     }
 
-    stage('Upload Artifact to Artifactory') {
-      steps {
-        script {
-          def server = Artifactory.server 'artifactory'
-          def uploadSpec = """{
-            git add .
-            "files": [{
-            "pattern": "php-todo.zip",
-            "target": "<name-of-artifact-repository>/php-todo",
-            "props": "type=zip;status=ready"
+    
+    stage ('Upload Artifact to Artifactory') {
+          steps {
+            script { 
+                 def server = Artifactory.server 'artifactory-server'                 
+                 def uploadSpec = """{
+                    "files": [
+                      {
+                       "pattern": "php-todo.zip",
+                       "target": "<name-of-artifact-repository>/php-todo",
+                       "props": "type=zip;status=ready"
 
-          }]
+                       }
+                    ]
+                 }""" 
+
+                 server.upload spec: uploadSpec
+               }
+            }
+
         }
-        ""
-        " 
 
-        server.upload spec: uploadSpec
-      }
-    }
 
-  }
 
-  stage('Clean Workspace after build') {
+  
+  
+    stage('Clean Workspace after build') {
     steps {
       cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
     }
-  }
+    }
 }
 
 }
