@@ -103,24 +103,11 @@ pipeline {
             // if (qualitygate.status != "OK") {
             //   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
             // }
-            // timeout(time: 2, unit: 'MINUTES') {
-            //     waitForQualityGate abortPipeline: true
-            // }
-        }
-    }
-
-
-    stage("Quality Gate") {
-            steps {
-                // wait for the quality gate results
-                timeout(time: 1, unit: 'MINUTES') {
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                        error "Pipeline failed due to quality gate failure: ${qg.status}"
-                    }
-                }
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate true
             }
         }
+    }
     
     stage ('Upload Artifact to Artifactory') {
           steps {
