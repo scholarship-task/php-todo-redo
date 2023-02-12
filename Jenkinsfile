@@ -110,7 +110,12 @@ pipeline {
         }
 
 
-
+    stage ('Deploy to Dev Environment') {
+    steps {
+    // build job: 'ansible-project/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+    build wait: false, job: 'ansible-config-mgt'
+    }
+  }
   
   
     stage('Clean Workspace after build') {
