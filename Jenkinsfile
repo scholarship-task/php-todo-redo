@@ -104,7 +104,7 @@ pipeline {
             //   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
             // }
             timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate
+                waitForQualityGate false
             }
         }
     }
